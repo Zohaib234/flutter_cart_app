@@ -1,5 +1,6 @@
 import 'package:cart_app/cart_model.dart';
 import 'package:cart_app/cart_provider.dart';
+import 'package:cart_app/cart_screen.dart';
 import 'package:cart_app/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,15 +46,20 @@ class _ProductListScreenState extends State<ProductListScreen> {
           style: TextStyle(color: Colors.white, fontSize: 30),
         ),
         actions:  [
-          Center(
-            child: Badge(
-              label: Consumer<CartProvider>(builder: (context,provider,child){
-                return Text(
-                  provider.getCounter().toString(),
-                  style: TextStyle(color: Colors.white),
-                );
-              },),
-              child: Icon(Icons.local_grocery_store),
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
+            },
+            child: Center(
+              child: Badge(
+                label: Consumer<CartProvider>(builder: (context,provider,child){
+                  return Text(
+                    provider.getCounter().toString(),
+                    style: TextStyle(color: Colors.white),
+                  );
+                },),
+                child: Icon(Icons.local_grocery_store),
+              ),
             ),
           ),
           SizedBox(

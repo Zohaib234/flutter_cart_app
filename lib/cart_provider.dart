@@ -1,7 +1,20 @@
+import 'package:cart_app/cart_model.dart';
+import 'package:cart_app/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartProvider with ChangeNotifier {
+
+  DBHelper db = DBHelper();
+
+  late Future<List<Cart>> _cart;
+  Future<List<Cart>> get cart => _cart;
+
+  Future<List<Cart>> getData() async{
+     _cart = db.getCartList();
+     return _cart;
+  }
+
   int _counter = 0;
   int get counter => _counter;
 
