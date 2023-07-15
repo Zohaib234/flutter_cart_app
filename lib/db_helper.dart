@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
@@ -21,15 +22,17 @@ class DBHelper{
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path,'cart.db');
     var db = await openDatabase(path,version: 1,onCreate: _onCreate);
+    return db;
   }
   _onCreate(Database db,int version) async{
     await db.execute('CREATE TABLE cart (id INTEGER  PRIMARY KEY,productId VARCHAR UNIQUE,productName TEXT,initialPrice INTEGER,productPrice INTEGER,quantity INTEGER, unitTag TEXT, image TEXT)');
 
-    Future<Cart> insert(Cart cart) async{
-       var DbClient = await db;
-       await DbClient.insert('cart', cart.toMap());
-       return cart;
-    }
 
+
+  }
+  Future<Cart> insert(Cart cart) async{
+    var DbClient = await db;
+    await DbClient?.insert('cart', cart.toMap());
+    return cart;
   }
 }
